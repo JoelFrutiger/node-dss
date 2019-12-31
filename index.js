@@ -3,6 +3,7 @@ const Router = require('router')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const debug = require('debug')('dss')
+const cors = require('cors')
 
 const router = Router()
 router.__dataStore = {}
@@ -34,7 +35,7 @@ router.use(bodyParser.raw({ limit: '10mb', type: () => true }))
 
 const bodyDebug = debug.extend('body')
 
-router.post('/data/:id', (req, res) => {
+router.post('/data/:id', cors(), (req, res) => {
   const deviceId = req.params.id
 
   if (!router.__dataStore[deviceId]) {
@@ -50,7 +51,7 @@ router.post('/data/:id', (req, res) => {
   res.end()
 })
 
-router.get('/data/:id', (req, res) => {
+router.get('/data/:id', cors(), (req, res) => {
   const deviceId = req.params.id
 
   if (!router.__dataStore[deviceId] || router.__dataStore[deviceId].length === 0) {
