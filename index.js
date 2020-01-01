@@ -7,6 +7,7 @@ const cors = require('cors')
 
 const router = Router()
 router.__dataStore = {}
+router.all('*', cors());
 
 const morganDebugStream = new stream.Writable({
   write: function (chunk, encoding, done) {
